@@ -68,6 +68,25 @@ bool completar_tabla(lista_t **tabla_hash, size_t capacidad) {
     return true;
 }
 
+//Crea un elemento del hash. Devuelve false en caso de error. 
+hash_elem_t* hash_elem_crear(const char* clave, void* dato) {
+
+    hash_elem_t* hash_elem = malloc(sizeof(hash_elem_t));
+    if(!hash_elem) return NULL;
+
+    char *copia_clave = strdup(clave);
+
+    if (!copia_clave) {
+        free(hash_elem);
+        return NULL;
+    }
+
+    hash_elem->clave = copia_clave;
+    hash_elem->dato = dato;
+    
+    return hash_elem;
+}
+
 //Recorre una lista pasada por parámetro y devuelve el elemento con la clave correspondiente
 //Si no se encuentra el elemento devuelve NULL
 //Si el parámetro borrar es true además de devolverlo lo borra de la lista
@@ -145,24 +164,6 @@ bool hash_redimensionar(hash_t* hash, size_t nueva_capacidad) {
     hash->tabla_hash = nueva_tabla_hash;
     
     return true;
-}
-
-hash_elem_t* hash_elem_crear(const char* clave, void* dato) {
-
-    hash_elem_t* hash_elem = malloc(sizeof(hash_elem_t));
-    if(!hash_elem) return NULL;
-
-    char *copia_clave = strdup(clave);
-
-    if (!copia_clave) {
-        free(hash_elem);
-        return NULL;
-    }
-
-    hash_elem->clave = copia_clave;
-    hash_elem->dato = dato;
-    
-    return hash_elem;
 }
 
 bool hash_guardar(hash_t *hash, const char *clave, void *dato) {
