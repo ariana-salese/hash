@@ -68,7 +68,7 @@ bool completar_tabla(lista_t **tabla_hash, size_t capacidad) {
     return true;
 }
 
-//Crea un elemento del hash. Devuelve false en caso de error. 
+//Crea un elemento del hash. Devuelve NULL en caso de error. 
 hash_elem_t* hash_elem_crear(const char* clave, void* dato) {
 
     hash_elem_t* hash_elem = malloc(sizeof(hash_elem_t));
@@ -171,6 +171,7 @@ bool hash_guardar(hash_t *hash, const char *clave, void *dato) {
     size_t pos = funcion_hash(clave, hash->capacidad);
 
     hash_elem_t* hash_elem = hash_elem_crear(clave, dato):
+    if (!hash_elem) return false;
 
     void* dato_ant = hash_borrar(hash, clave); 
     if (dato_ant && hash->destruir_dato) hash->destruir_dato(dato_ant); 
